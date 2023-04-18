@@ -56,7 +56,7 @@
     foreach($hotels as $hotel) {
         
         foreach($hotel as $key => $data) {
-            echo  $key . $data . '<br>';
+            echo  $key .'-'. $data . '<br>';
 
         }
     };
