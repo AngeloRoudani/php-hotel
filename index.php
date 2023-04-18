@@ -57,8 +57,6 @@
 
         foreach($hotel as $key => $data) {
             echo  $key .'-'. $data . '<br>';
-            
-            
         }
     };
 
@@ -72,47 +70,15 @@
             <table class="table">
         <thead>
             <tr>
-            <th scope="col">nome</th>
-            <th scope="col"><?php echo $hotels[0]['name']; ?></th>
-            <th scope="col"><?php echo $hotels[1]['name']; ?></th>
-            <th scope="col"><?php echo $hotels[2]['name']; ?></th>
-            <th scope="col"><?php echo $hotels[3]['name']; ?></th>
-            <th scope="col"><?php echo $hotels[4]['name']; ?></th>
-            
+            <th scope="col"><?php echo implode('</th><th>', array_keys(current($hotels))); ?></th>
             </tr>
         </thead>
         <tbody>
+            <?php foreach ($hotels as $row): array_map('htmlentities', $row); ?>
             <tr>
-            <th scope="row">Descrizione</th>
-            <td><?php echo $hotels[0]['description']; ?></td>
-            <td><?php echo $hotels[1]['description']; ?></td>
-            <td><?php echo $hotels[2]['description']; ?></td>
-            <td><?php echo $hotels[3]['description']; ?></td>
-            <td><?php echo $hotels[4]['description']; ?></td>
+            <td scope="row"><?php echo implode('</td><td>', $row); ?></td>
             </tr>
-            <tr>
-            <th scope="row">Parcheggio</th>
-            <td><?php echo $hotels[0]['parking']; ?></td>
-            <td><?php echo $hotels[1]['parking']; ?></td>
-            <td><?php echo $hotels[2]['parking']; ?></td>
-            <td><?php echo $hotels[3]['parking']; ?></td>
-            <td><?php echo $hotels[4]['parking']; ?></td>
-            </tr>
-            <tr>
-            <th scope="row">Voto</th>
-            <td><?php echo $hotels[0]['vote']; ?></td>
-            <td><?php echo $hotels[1]['vote']; ?></td>
-            <td><?php echo $hotels[2]['vote']; ?></td>
-            <td><?php echo $hotels[3]['vote']; ?></td>
-            <td><?php echo $hotels[4]['vote']; ?></td>
-            </tr>
-            <th scope="row">Distanza dal centro</th>
-            <td><?php echo $hotels[0]['distance_to_center']; ?></td>
-            <td><?php echo $hotels[1]['distance_to_center']; ?></td>
-            <td><?php echo $hotels[2]['distance_to_center']; ?></td>
-            <td><?php echo $hotels[3]['distance_to_center']; ?></td>
-            <td><?php echo $hotels[4]['distance_to_center']; ?></td>
-            </tr>
+            <?php endforeach; ?>
         </tbody>
         </table>
         
