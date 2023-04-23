@@ -49,16 +49,40 @@
         ],
 
     ];
-
-    $title = '';
-    $description = '';
+    
+    //creazione di array differenti per il controllo siParcheggio/NoParcheggio
+    $newHotels = [];
+    $noParking = [];
+    $yesParking =[];
 
     foreach($hotels as $hotel) {
+        if($hotel['parking'] == false) {
+            $noParking[] = $hotel;
 
-        foreach($hotel as $key => $data) {
-            echo  $key .'-'. $data . '<br>';
+        } elseif($hotel['parking'] == true) {
+            $yesParking[] = $hotel;
         }
     };
+
+    //controllo del valore booleano del Parcheggio dalla select 
+
+    if(isset($_GET['parking'])) {
+
+        if($_GET['parking'] == '1') {
+
+            $newHotels = $yesParking;
+                
+        } elseif ($_GET['parking'] == '0') {
+
+            $newHotels = $noParking;
+
+        } else {
+
+            $newHotels = $hotels;
+        }
+    }
+
+
 
 ?>
 
@@ -67,20 +91,46 @@
     </header>
 
     <main>
-            <table class="table">
-        <thead>
-            <tr>
-            <th scope="col"><?php echo implode('</th><th>', array_keys(current($hotels))); ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($hotels as $row): array_map('htmlentities', $row); ?>
-            <tr>
-            <td scope="row"><?php echo implode('</td><td>', $row); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-        </table>
+        <div class="container">
+            <div class="row">
+                <!--scelta se parcheggio si parcheggio no-->
+                <form action="index.php" method="GET">
+                    <select class="form-select col-2 w-25" aria-label="Default select example" name="parking">
+                        <option value="" selected>Tutti</option>
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary" name="submit">invia</button>
+                </form>
+                <table class="table">
+
+                <!--creazione dinamica della lista degli hotels-->
+
+                <thead>
+                    <tr> 
+                        <th><?php echo 'name' ?></th>
+                        <th><?php echo 'description' ?></th>
+                        <th><?php echo 'parking' ?></th>
+                        <th><?php echo 'vote' ?></th>
+                        <th><?php echo 'distance_to_center' ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                        foreach($newHotels as $hotel) { ?>
+                    <tr>
+                        <th scope="row"><?php echo $hotel['name']; ?></th>
+                        <td><?php echo $hotel['description']; ?></td>
+                        <td><?php echo $hotel['parking']?'presente':'assente'; ?></td>
+                        <td><?php echo $hotel['vote']; ?></td>
+                        <td><?php echo $hotel['distance_to_center']; ?></td>
+                        <?php };
+                    ?>
+                    </tr>
+                </tbody>
+                </table>
+        </div>
+        </div>
         
     </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
